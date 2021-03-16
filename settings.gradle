@@ -6,10 +6,6 @@
  * Detailed information about configuring a multi-project build in Gradle can be found
  * in the user manual at https://docs.gradle.org/5.2.1/userguide/multi_project_builds.html
  */
-plugins{
-    id "com.github.johnrengelman.shadow" version "6.1.0" apply(false)
-}
-
 rootProject.name = 'secure-chat'
 include 'backend'
 include 'cli'

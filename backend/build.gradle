@@ -1,7 +1,7 @@
 import org.nelis.*
 
-plugins {
-    id 'java'
+plugins{
+    id "com.github.johnrengelman.shadow"
 }
 
 apply plugin: BasicApplicationPlugin
@@ -11,6 +11,10 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+shadowJar {
+    mainClassName = "App"
 }
 
 dependencies {

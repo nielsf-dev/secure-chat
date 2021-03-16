@@ -14,3 +14,4 @@ classes
 default-compile
 *.war
 /.nb-gradle/
+/backend/build/
