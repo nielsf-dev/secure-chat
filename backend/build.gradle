@@ -1,6 +1,10 @@
+import org.nelis.*
+
 plugins {
     id 'java'
 }
+
+apply plugin: BasicApplicationPlugin
 
 group 'org.nelis'
 version '1.0-SNAPSHOT'
@@ -10,5 +14,5 @@ repositories {
 }
 
 dependencies {
-    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    implementation 'org.hibernate:hibernate-core:5.4.3.Final'
 }
