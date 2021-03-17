@@ -1,2 +1,10 @@
-App.java
- App
+org/nelis/domain/User.java
+ org.nelis.domain.User
+org/nelis/App.java
+ org.nelis.App
+org/nelis/domain/ChatRoom.java
+ org.nelis.domain.ChatRoom
+org/nelis/domain/ChatRoomMessage.java
+ org.nelis.domain.ChatRoomMessage
+org/nelis/domain/ChatMessage.java
+ org.nelis.domain.ChatMessage
