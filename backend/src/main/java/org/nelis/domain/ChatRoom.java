@@ -1,8 +1,13 @@
 package org.nelis.domain;
 
+import javassist.NotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Een ChatRoom bevat een aantal gebruikers die berichten naar de chatroom kunnen sturen.
+ */
 public class ChatRoom {
 
     List<User> users;
@@ -17,12 +22,18 @@ public class ChatRoom {
         users.add(user);
     }
 
-    public ChatRoomMessage sendChatMessage(int userIdFrom, ChatMessage chatMessage) throws Exception {
+    /**
+     * Verstuur een chat bericht in deze room
+     * @param userId Originating gebruiker
+     * @param chatMessage Het chat bericht
+     * @throws NotFoundException
+     */
+    public ChatRoomMessage sendChatMessage(int userId, ChatMessage chatMessage) throws NotFoundException {
         User userFrom = users.stream()
-                .filter(user -> user.id == userIdFrom)
+                .filter(user -> user.id == userId)
                 .findAny()
                 // todo: uitzoeken wat voor constructie dit is
-                .orElseThrow(() -> new Exception("From gebruiker niet bekend: " + userIdFrom));
+                .orElseThrow(() -> new NotFoundException("User niet bekend: " + userId));
 
         ChatRoomMessage chatRoomMessage = new ChatRoomMessage(userFrom, this, chatMessage);
         messages.add(chatRoomMessage);
