@@ -1,8 +1,11 @@
 package org.nelis.domain;
 
+/**
+ * Een ChatMessage, kan emoticons bevatten en tekst
+ */
 public class ChatMessage {
-    Long id;
-    String message;
+    private Long id;
+    private String message;
 
     public ChatMessage(String message) {
         this.message = message;

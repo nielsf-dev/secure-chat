@@ -1,13 +1,15 @@
 package org.nelis.domain
 
+import javassist.NotFoundException
 import spock.lang.Specification
 
 class ChatRoomTest extends Specification {
-    def chatRoom = new ChatRoom()
+    def chatRoom = new ChatRoom("mycoolsexychatroom")
     def user1 = new User(1, "Niels")
     def user2 = new User(2, "Reals")
 
     def setup(){
+        chatRoom.insertUser(user1)
         chatRoom.insertUser(user1)
         chatRoom.insertUser(user2)
     }
@@ -19,7 +21,7 @@ class ChatRoomTest extends Specification {
 
     def "Bericht sturen(goed)"(){
         when:
-        def result = chatRoom.sendChatMessage(1, new ChatMessage("test"))
+        def result = chatRoom.sendMessage(1, new ChatMessage("test"))
 
         then:
         result != null
@@ -28,9 +30,9 @@ class ChatRoomTest extends Specification {
 
     def "Bericht sturen(fout)"(){
         when:
-        chatRoom.sendChatMessage(3,new ChatMessage("test"))
+        chatRoom.sendMessage(3,new ChatMessage("test"))
 
         then:
-        thrown(Exception)
+        thrown(NotFoundException)
     }
 }

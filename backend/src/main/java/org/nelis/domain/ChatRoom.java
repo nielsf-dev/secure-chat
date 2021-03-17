@@ -1,6 +1,8 @@
 package org.nelis.domain;
 
 import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,16 +12,26 @@ import java.util.List;
  */
 public class ChatRoom {
 
-    List<User> users;
-    List<ChatRoomMessage> messages;
+    private static Logger logger = LoggerFactory.getLogger(ChatRoom.class);
 
-    public ChatRoom() {
+    private Long id;
+    private String name;
+    private List<User> users;
+    private List<ChatRoomMessage> messages;
+
+    public ChatRoom(String name) {
+        this.name = name;
         this.users = new ArrayList<>();
         this.messages = new ArrayList<>();
     }
 
+    /**
+     * Voeg een User toe aan de chatroom
+     * @param user De User
+     */
     public void insertUser(User user){
-        users.add(user);
+        if(!users.contains(user))
+            users.add(user);
     }
 
     /**
@@ -28,15 +40,21 @@ public class ChatRoom {
      * @param chatMessage Het chat bericht
      * @throws NotFoundException
      */
-    public ChatRoomMessage sendChatMessage(int userId, ChatMessage chatMessage) throws NotFoundException {
+    public ChatRoomMessage sendMessage(int userId, ChatMessage chatMessage) throws NotFoundException {
+
         User userFrom = users.stream()
-                .filter(user -> user.id == userId)
+                .filter(user -> user.getId() == userId)
                 .findAny()
                 // todo: uitzoeken wat voor constructie dit is
-                .orElseThrow(() -> new NotFoundException("User niet bekend: " + userId));
+                .orElseThrow(() -> {
+                    String errorMsg = String.format("UserID %d niet bekend in room %d", userId, id);
+                    return new NotFoundException(errorMsg);
+                });
 
         ChatRoomMessage chatRoomMessage = new ChatRoomMessage(userFrom, this, chatMessage);
         messages.add(chatRoomMessage);
+        logger.trace("sendChatMessage '{}' in ChatRoom '{}' door User '{}'", chatMessage.getMessage(), name, userFrom.getName());
+
         return chatRoomMessage;
     }
 }
