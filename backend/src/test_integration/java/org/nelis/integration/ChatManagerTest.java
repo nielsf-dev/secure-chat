@@ -7,6 +7,9 @@ import org.nelis.domain.ChatMessage;
 import org.nelis.domain.User;
 import org.nelis.service.blocking.ChatManager;
 import org.nelis.service.blocking.dao.DaoManager;
+import org.nelis.service.blocking.dao.UserDao;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,14 +17,14 @@ public class ChatManagerTest {
     @Test
     public void test(){
         DaoManager daoManager = new DaoManager();
-        Session session = daoManager.getSessionFactory().openSession();
+        UserDao userDao = daoManager.getUserDao();
+
+        userDao.save(new User("Het werkt jongee"));
+
+        List<User> all = userDao.findAll();
+        all.stream().forEach(user -> System.out.println(user.getName()));
 
 
-        Transaction tx = session.beginTransaction();
-        User user = new User("relis");
-        session.save(user);
-        session.flush();
-        tx.commit();
 
 //        ChatManager chatManager = new ChatManager(daoManager.getChatRoomDao(),
 //                daoManager.getChatRoomMessageDao());

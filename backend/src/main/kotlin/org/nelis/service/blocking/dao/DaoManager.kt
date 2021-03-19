@@ -10,8 +10,9 @@ import org.nelis.domain.User
 class DaoManager {
 
     val chatRoomDao:ChatRoomDao
-
     val chatRoomMessageDao:ChatRoomMessageDao
+    val userDao: UserDao
+    val chatMessageDao: ChatMessageDao
     val sessionFactory:SessionFactory
 
     init {
@@ -34,6 +35,8 @@ class DaoManager {
             .build()
 
         chatRoomDao = ChatRoomDaoImp(sessionFactory)
+        userDao = UserDaoImp(sessionFactory)
+        chatMessageDao = ChatMessageDaoImp(sessionFactory)
         chatRoomMessageDao = ChatRoomMessageDaoImp(sessionFactory)
     }
 }
