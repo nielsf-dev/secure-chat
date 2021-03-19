@@ -1,5 +1,7 @@
 package org.nelis.domain;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -15,12 +17,17 @@ public class ChatRoomMessage {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "userid")
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "chatroomid")
+    //@Cascade(org.hibernate.annotations.CascadeType.ALL)
     private ChatRoom chatRoom;
 
     @ManyToOne
+    @JoinColumn(name = "chatmessageid")
+  //  @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private ChatMessage chatMessage;
 
     public ChatRoomMessage(User user, ChatRoom chatRoom, ChatMessage chatMessage) {

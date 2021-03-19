@@ -1,6 +1,7 @@
 package org.nelis.domain;
 
 import javassist.NotFoundException;
+import org.hibernate.annotations.Cascade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +34,7 @@ public class ChatRoom {
     @OneToMany(targetEntity = User.class)
     private List<User> users;
 
-    @Transient
+    @OneToMany(targetEntity = ChatRoomMessage.class, mappedBy = "chatRoom")
     private List<ChatRoomMessage> messages;
 
     public ChatRoom(String name) {
@@ -61,7 +62,7 @@ public class ChatRoom {
      * @param chatMessage Het chat bericht
      * @throws NotFoundException
      */
-    public ChatRoomMessage sendMessage(int userId, ChatMessage chatMessage) throws NotFoundException {
+    public ChatRoomMessage sendMessage(long userId, ChatMessage chatMessage) throws NotFoundException {
 
         User userFrom = users.stream()
                 .filter(user -> user.getId() == userId)
@@ -91,7 +92,7 @@ public class ChatRoom {
         return users;
     }
 
-    public List<ChatRoomMessage> getMessages() {
-        return messages;
-    }
+    //public List<ChatRoomMessage> getMessages() {
+    //    return messages;
+ //   }
 }

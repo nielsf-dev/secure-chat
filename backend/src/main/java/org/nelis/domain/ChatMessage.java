@@ -1,9 +1,6 @@
 package org.nelis.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -16,6 +13,8 @@ public class ChatMessage {
     @Id
     @GeneratedValue(strategy=IDENTITY)
     private Long id;
+
+    @Column(name = "text")
     private String message;
 
     protected ChatMessage() {
