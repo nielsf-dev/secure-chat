@@ -22,15 +22,14 @@ public abstract class AbstractHibernateDao<T> implements HibernateDao<T> {
 
     @Override
     public T find(long id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         T user = session.find(type, id);
-        session.close();
         return user;
     }
 
     @Override
     public List<T> findAll() {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
 
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(type);
@@ -43,9 +42,7 @@ public abstract class AbstractHibernateDao<T> implements HibernateDao<T> {
 
     @Override
     public void save(T object) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(object);
-        tx.commit();
     }
 }

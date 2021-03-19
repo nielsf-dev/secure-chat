@@ -57,6 +57,7 @@ dependencies {
     test_integrationImplementation 'org.junit.jupiter:junit-jupiter:5.4.2'
     test_integrationImplementation 'org.hibernate:hibernate-core:5.4.3.Final'
     test_integrationImplementation 'org.postgresql:postgresql:9.4.1212'
+    test_integrationImplementation 'ch.qos.logback:logback-classic:1.2.3'
 }
 compileKotlin {
     kotlinOptions {

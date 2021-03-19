@@ -5,6 +5,9 @@ import org.hibernate.boot.MetadataSources
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
 import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder
+import org.nelis.domain.ChatMessage
+import org.nelis.domain.ChatRoom
+import org.nelis.domain.ChatRoomMessage
 import org.nelis.domain.User
 
 class DaoManager {
@@ -26,6 +29,9 @@ class DaoManager {
 
         val metadata = MetadataSources(standardRegistry)
             .addAnnotatedClass(User::class.java)
+            .addAnnotatedClass(ChatRoom::class.java)
+            .addAnnotatedClass(ChatMessage::class.java)
+            .addAnnotatedClass(ChatRoomMessage::class.java)
             //.addAnnotatedClass(Project::class.java)
             .metadataBuilder
             .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)

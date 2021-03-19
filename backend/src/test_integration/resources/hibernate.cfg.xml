@@ -30,6 +30,8 @@
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">false</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+
 
         <!-- Drop and re-create the database schema on startup -->
         <!--<property name="hbm2ddl.auto">create</property>-->
