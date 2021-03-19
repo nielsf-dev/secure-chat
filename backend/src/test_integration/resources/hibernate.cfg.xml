@@ -15,7 +15,7 @@
 
         <!-- Database connection settings -->
         <!--<property name="connection.driver_class">org.h2.Driver</property>-->
-        <property name="connection.url">jdbc:postgresql://localhost/mydb</property>
+        <property name="connection.url">jdbc:postgresql://192.168.63.81/chat</property>
         <property name="connection.username">postgres</property>
         <property name="connection.password">toor</property>
 

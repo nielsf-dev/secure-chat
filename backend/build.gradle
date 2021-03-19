@@ -31,8 +31,6 @@ test{
     useJUnitPlatform()
 }
 
-
-
 sourceSets{
     test_integration{
         compileClasspath += sourceSets.main.output

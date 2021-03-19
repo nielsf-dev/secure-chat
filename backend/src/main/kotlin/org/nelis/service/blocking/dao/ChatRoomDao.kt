@@ -2,6 +2,6 @@ package org.nelis.service.blocking.dao
 
 import org.nelis.domain.ChatRoom
 
-interface ChatRoomDao {
+interface ChatRoomDao : HibernateDao<ChatRoom> {
     fun getChatRoomById(chatRoomId: Int): ChatRoom
 }

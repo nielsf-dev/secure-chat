@@ -25,9 +25,10 @@ class ChatManagerTest extends Specification {
         chatRoomDao.getChatRoomById(1) >> chatRoom
 
         when:
-        chatManager.sendChatMessage(1, 1, new ChatMessage("chatting"))
+        def success = chatManager.sendChatMessage(1, 1, new ChatMessage("chatting"))
 
         then:
+        success
         1 * chatRoomMessageDao.save(_)
     }
 }

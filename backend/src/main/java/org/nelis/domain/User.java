@@ -1,20 +1,34 @@
 package org.nelis.domain;
 
+import javax.persistence.*;
 import java.util.Objects;
+
+import static javax.persistence.GenerationType.SEQUENCE;
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * Een chat user
  */
+@Entity(name = "\"user\"")
 public class User {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy=IDENTITY)
+    private long id;
+
+
+    @Column(name = "name")
     private String name;
 
-    public User(int id, String name) {
-        this.id = id;
+    protected User(){
+
+    }
+
+    public User(String name) {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

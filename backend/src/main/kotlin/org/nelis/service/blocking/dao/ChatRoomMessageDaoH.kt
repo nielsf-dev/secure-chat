@@ -3,9 +3,6 @@ package org.nelis.service.blocking.dao
 import org.hibernate.SessionFactory
 import org.nelis.domain.ChatRoomMessage
 
-class ChatRoomMessageDaoH(val sessionFactory: SessionFactory) : ChatRoomMessageDao {
+class ChatRoomMessageDaoH(private val sessionFactory: SessionFactory) : AbstractHibernateDao<ChatRoomMessage>(sessionFactory,ChatRoomMessage::class.java), ChatRoomMessageDao {
 
-    override fun save(chatRoomMessage: ChatRoomMessage) {
-        TODO("Not yet implemented")
-    }
 }
