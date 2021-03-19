@@ -22,12 +22,10 @@ public class ChatRoomMessage {
 
     @ManyToOne
     @JoinColumn(name = "chatroomid")
-    //@Cascade(org.hibernate.annotations.CascadeType.ALL)
     private ChatRoom chatRoom;
 
     @ManyToOne
     @JoinColumn(name = "chatmessageid")
-  //  @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private ChatMessage chatMessage;
 
     public ChatRoomMessage(User user, ChatRoom chatRoom, ChatMessage chatMessage) {

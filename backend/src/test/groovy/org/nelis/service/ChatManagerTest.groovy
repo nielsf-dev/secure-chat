@@ -24,7 +24,7 @@ class ChatManagerTest extends Specification {
 
     def "Basic chat"(){
         given:
-        chatRoomDao.getChatRoomById(1) >> chatRoom
+        chatRoomDao.find(1) >> chatRoom
 
         when:
         def success = chatManager.sendChatMessage(1, 1, new ChatMessage("chatting"))

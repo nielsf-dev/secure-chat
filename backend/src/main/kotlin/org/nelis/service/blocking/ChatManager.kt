@@ -13,9 +13,9 @@ class ChatManager(private val chatRoomDao: ChatRoomDao, private val chatRoomMess
 
     fun sendChatMessage(roomId: Long, userId: Long, chatMessage: ChatMessage?): Boolean {
         return try {
+            chatMessageDao.save(chatMessage)
             val chatRoom = chatRoomDao.find(roomId)
 
-            chatMessageDao.save(chatMessage)
             val chatRoomMessage = chatRoom.sendMessage(userId, chatMessage)
             chatRoomMessageDao.save(chatRoomMessage)
             true
