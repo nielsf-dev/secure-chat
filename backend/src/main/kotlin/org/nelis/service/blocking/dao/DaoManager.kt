@@ -33,7 +33,7 @@ class DaoManager {
         sessionFactory = metadata.sessionFactoryBuilder
             .build()
 
-        chatRoomDao = ChatRoomDaoH(sessionFactory)
-        chatRoomMessageDao = ChatRoomMessageDaoH(sessionFactory)
+        chatRoomDao = ChatRoomDaoImp(sessionFactory)
+        chatRoomMessageDao = ChatRoomMessageDaoImp(sessionFactory)
     }
 }

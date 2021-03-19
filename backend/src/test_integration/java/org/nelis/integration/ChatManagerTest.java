@@ -16,6 +16,7 @@ public class ChatManagerTest {
         DaoManager daoManager = new DaoManager();
         Session session = daoManager.getSessionFactory().openSession();
 
+
         Transaction tx = session.beginTransaction();
         User user = new User("relis");
         session.save(user);
