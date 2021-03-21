@@ -63,7 +63,7 @@ public class DaoTest {
         chatRoom.insertUser(user2);
         chatRoomDao.save(chatRoom);
 
-        ChatManager chatManager = new ChatManager(chatRoomDao, daoManager.getChatRoomMessageDao(), daoManager.getChatMessageDao());
+        ChatManager chatManager = new ChatManager(chatRoomDao, daoManager.getChatRoomMessageDao(), daoManager.getChatMessageDao(), daoManager.getUserDao());
         chatManager.sendChatMessage(chatRoom.getId(), user1.getId(), new ChatMessage("cool message"));
         chatManager.sendChatMessage(chatRoom.getId(), user2.getId(), new ChatMessage("haai"));
         boolean success = chatManager.sendChatMessage(chatRoom.getId(), user1.getId(), new ChatMessage("doeei"));

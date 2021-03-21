@@ -32,7 +32,6 @@ class DaoManager {
             .addAnnotatedClass(ChatRoom::class.java)
             .addAnnotatedClass(ChatMessage::class.java)
             .addAnnotatedClass(ChatRoomMessage::class.java)
-            //.addAnnotatedClass(Project::class.java)
             .metadataBuilder
             .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
             .build()

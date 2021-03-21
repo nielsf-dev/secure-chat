@@ -17,12 +17,10 @@ public class User {
     @GeneratedValue(strategy=IDENTITY)
     private long id;
 
-
     @Column(name = "name")
     private String name;
 
     protected User(){
-
     }
 
     public User(long id, String name) {

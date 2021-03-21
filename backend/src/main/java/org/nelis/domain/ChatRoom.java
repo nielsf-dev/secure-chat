@@ -92,7 +92,7 @@ public class ChatRoom {
         return users;
     }
 
-    //public List<ChatRoomMessage> getMessages() {
-    //    return messages;
- //   }
+    public List<ChatRoomMessage> getMessages() {
+        return messages;
+    }
 }

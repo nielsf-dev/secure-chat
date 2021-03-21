@@ -7,6 +7,7 @@ import org.nelis.service.blocking.ChatManager
 import org.nelis.service.blocking.dao.ChatMessageDao
 import org.nelis.service.blocking.dao.ChatRoomDao
 import org.nelis.service.blocking.dao.ChatRoomMessageDao
+import org.nelis.service.blocking.dao.UserDao
 import spock.lang.Specification
 
 class ChatManagerTest extends Specification {
@@ -15,7 +16,8 @@ class ChatManagerTest extends Specification {
     def chatRoomDao = Mock(ChatRoomDao)
     def chatRoomMessageDao = Mock(ChatRoomMessageDao)
     def chatMessageDao = Mock(ChatMessageDao)
-    def chatManager = new ChatManager(chatRoomDao, chatRoomMessageDao, chatMessageDao)
+    def userDao = Mock(UserDao)
+    def chatManager = new ChatManager(chatRoomDao, chatRoomMessageDao, chatMessageDao, userDao)
 
     def setup(){
         chatRoom.insertUser(new User(1,"niels"))
