@@ -34,7 +34,7 @@ public class ChatRoom {
     @OneToMany(targetEntity = User.class)
     private List<User> users;
 
-    @OneToMany(targetEntity = ChatRoomMessage.class)
+    @OneToMany(targetEntity = ChatRoomMessage.class, mappedBy = "chatRoom")
     private List<ChatRoomMessage> messages;
 
     public ChatRoom(String name) {
