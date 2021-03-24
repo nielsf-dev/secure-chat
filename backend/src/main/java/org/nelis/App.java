@@ -1,5 +1,7 @@
 package org.nelis;
 
+import io.undertow.Undertow;
+import io.undertow.util.Headers;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
@@ -21,6 +23,20 @@ public class App {
         logger.info("logging working");
         System.out.println("yolo");
 
+        Undertow server = Undertow.builder()
+                .addHttpListener(8080,"localhost")
+                .setHandler(exchange -> {
+                                exchange.getResponseHeaders()
+                                .put(Headers.CONTENT_TYPE, "text/plain");
+                                exchange.getResponseSender().send("Hello Baeldung");
+                           })
+                .build();
+        server.start();
+
+      //  startTomcat();
+    }
+
+    private static void startTomcat() throws LifecycleException {
         Tomcat tomcat = new Tomcat();
         tomcat.setPort(8082);
 

@@ -8,7 +8,9 @@
         </encoder>
     </appender>
 
-    <root level="trace">
+    <logger name="org.hibernate.sql" level="TRACE"/>
+
+    <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
 

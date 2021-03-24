@@ -34,7 +34,7 @@ public class ChatRoom {
     @OneToMany(targetEntity = User.class)
     private List<User> users;
 
-    @OneToMany(targetEntity = ChatRoomMessage.class, mappedBy = "chatRoom")
+    @OneToMany(targetEntity = ChatRoomMessage.class, mappedBy = "chatRoom", cascade = CascadeType.ALL)
     private List<ChatRoomMessage> messages;
 
     public ChatRoom(String name) {
@@ -62,12 +62,10 @@ public class ChatRoom {
      * @param chatMessage Het chat bericht
      * @throws NotFoundException
      */
-    public ChatRoomMessage sendMessage(long userId, ChatMessage chatMessage) throws NotFoundException {
-
+    public void sendMessage(long userId, ChatMessage chatMessage) throws NotFoundException {
         User userFrom = users.stream()
                 .filter(user -> user.getId() == userId)
                 .findAny()
-                // todo: uitzoeken wat voor constructie dit is
                 .orElseThrow(() -> {
                     String errorMsg = String.format("UserID %d niet bekend in room %d", userId, id);
                     return new NotFoundException(errorMsg);
@@ -76,8 +74,6 @@ public class ChatRoom {
         ChatRoomMessage chatRoomMessage = new ChatRoomMessage(userFrom, this, chatMessage);
         messages.add(chatRoomMessage);
         logger.trace("sendChatMessage '{}' in ChatRoom '{}' door User '{}'", chatMessage.getMessage(), name, userFrom.getName());
-
-        return chatRoomMessage;
     }
 
     public Long getId() {

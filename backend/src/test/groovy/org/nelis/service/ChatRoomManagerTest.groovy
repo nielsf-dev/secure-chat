@@ -3,21 +3,17 @@ package org.nelis.service
 import org.nelis.domain.ChatMessage
 import org.nelis.domain.ChatRoom
 import org.nelis.domain.User
-import org.nelis.service.blocking.ChatManager
-import org.nelis.service.blocking.dao.ChatMessageDao
+import org.nelis.service.blocking.ChatRoomManager
 import org.nelis.service.blocking.dao.ChatRoomDao
-import org.nelis.service.blocking.dao.ChatRoomMessageDao
 import org.nelis.service.blocking.dao.UserDao
 import spock.lang.Specification
 
-class ChatManagerTest extends Specification {
+class ChatRoomManagerTest extends Specification {
 
     def chatRoom = new ChatRoom("chatroom");
     def chatRoomDao = Mock(ChatRoomDao)
-    def chatRoomMessageDao = Mock(ChatRoomMessageDao)
-    def chatMessageDao = Mock(ChatMessageDao)
     def userDao = Mock(UserDao)
-    def chatManager = new ChatManager(chatRoomDao, chatRoomMessageDao, chatMessageDao, userDao)
+    def chatManager = new ChatRoomManager(chatRoomDao, userDao)
 
     def setup(){
         chatRoom.insertUser(new User(1,"niels"))
@@ -33,6 +29,6 @@ class ChatManagerTest extends Specification {
 
         then:
         success
-        1 * chatRoomMessageDao.save(_)
+        chatRoom.messages.size() == 1
     }
 }

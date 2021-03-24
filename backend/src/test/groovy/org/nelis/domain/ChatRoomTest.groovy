@@ -21,11 +21,10 @@ class ChatRoomTest extends Specification {
 
     def "Bericht sturen(goed)"(){
         when:
-        def result = chatRoom.sendMessage(1, new ChatMessage("test"))
+        chatRoom.sendMessage(1, new ChatMessage("test"))
 
         then:
-        result != null
-      //  chatRoom.messages.size() == 1
+        chatRoom.messages.size() == 1
     }
 
     def "Bericht sturen(fout)"(){

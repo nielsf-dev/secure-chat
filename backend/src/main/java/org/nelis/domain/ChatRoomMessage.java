@@ -24,7 +24,7 @@ public class ChatRoomMessage {
     @JoinColumn(name = "chatroomid")
     private ChatRoom chatRoom;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "chatmessageid")
     private ChatMessage chatMessage;
 

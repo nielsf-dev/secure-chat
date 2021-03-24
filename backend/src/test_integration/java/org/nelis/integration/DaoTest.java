@@ -1,16 +1,15 @@
 package org.nelis.integration;
 
+import javassist.NotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.nelis.domain.ChatMessage;
 import org.nelis.domain.ChatRoom;
 import org.nelis.domain.User;
-import org.nelis.service.blocking.ChatManager;
+import org.nelis.service.blocking.ChatRoomManager;
 import org.nelis.service.blocking.dao.ChatRoomDao;
 import org.nelis.service.blocking.dao.DaoManager;
 import org.nelis.service.blocking.dao.UserDao;
@@ -49,6 +48,18 @@ public class DaoTest {
     }
 
     @Test
+    void relationTest() throws NotFoundException {
+        Transaction tx = currentSession.beginTransaction();
+        ChatRoomDao chatRoomDao = daoManager.getChatRoomDao();
+
+        ChatRoom chatRoom = chatRoomDao.find(3);
+        User firstUser = chatRoom.getUsers().stream().findFirst().get();
+        chatRoom.sendMessage(firstUser.getId(),new ChatMessage("yolings"));
+
+        tx.commit();
+    }
+
+    @Test
     void testChatRoom() {
         Transaction tx = currentSession.beginTransaction();
 
@@ -63,15 +74,15 @@ public class DaoTest {
         chatRoom.insertUser(user2);
         chatRoomDao.save(chatRoom);
 
-        ChatManager chatManager = new ChatManager(chatRoomDao, daoManager.getChatRoomMessageDao(), daoManager.getChatMessageDao(), daoManager.getUserDao());
+        ChatRoomManager chatRoomManager = new ChatRoomManager(chatRoomDao, daoManager.getUserDao());
 
-        boolean success = chatManager.sendChatMessage(chatRoom.getId(), user1.getId(), new ChatMessage("cool message"));
+        boolean success = chatRoomManager.sendChatMessage(chatRoom.getId(), user1.getId(), new ChatMessage("cool message"));
         assertTrue(success);
 
-        success = chatManager.sendChatMessage(chatRoom.getId(), user2.getId(), new ChatMessage("haai"));
+        success = chatRoomManager.sendChatMessage(chatRoom.getId(), user2.getId(), new ChatMessage("haai"));
         assertTrue(success);
 
-        success = chatManager.sendChatMessage(chatRoom.getId(), user1.getId(), new ChatMessage("doeei"));
+        success = chatRoomManager.sendChatMessage(chatRoom.getId(), user1.getId(), new ChatMessage("doeei"));
         assertTrue(success);
 
         tx.commit();
