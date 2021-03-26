@@ -1,7 +1,5 @@
 package org.nelis.domain;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -28,7 +26,7 @@ public class ChatRoomMessage {
     @JoinColumn(name = "chatmessageid")
     private ChatMessage chatMessage;
 
-    public ChatRoomMessage(User user, ChatRoom chatRoom, ChatMessage chatMessage) {
+    public ChatRoomMessage(ChatRoom chatRoom, User user, ChatMessage chatMessage) {
         this.user = user;
         this.chatRoom = chatRoom;
         this.chatMessage = chatMessage;

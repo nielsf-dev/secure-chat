@@ -1,22 +1,17 @@
 package org.nelis;
 
-import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
 
-public class ChatServlet implements Servlet {
+public class DemoServlet implements Servlet {
 
-    private static Logger logger = LoggerFactory.getLogger(ChatServlet.class);
+    private static Logger logger = LoggerFactory.getLogger(DemoServlet.class);
     private ServletConfig config;
 
     @Override
