@@ -42,11 +42,11 @@ public class ChatServlet implements Servlet {
                 .orElseThrow(() -> new ServletException("Command niet gevonden"));
 
         BufferedReader requestReader = httpRequest.getReader();
-        String request = requestReader.lines().collect(Collectors.joining());
-        String response = chatServletCommand.getResponse(request);
+        String requestBody = requestReader.lines().collect(Collectors.joining());
+        String responseBody = chatServletCommand.getResponse(requestBody);
 
         PrintWriter writer = servletResponse.getWriter();
-        writer.write(response);
+        writer.write(responseBody);
         writer.flush();
         writer.close();
     }

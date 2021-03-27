@@ -26,7 +26,11 @@ public class TomcatHelper {
             ctx.addServletMapping("/*", "coolio");
 
             tomcat.start();
-            tomcat.getServer().await();
+            Server server = tomcat.getServer();
+            server.addLifecycleListener(event -> {
+                logger.info("lifecycle event: {}", event.getType());
+            });
+            server.await();
         }
         catch (Exception exception){
             logger.error("Fout bij starten tomcat", exception);

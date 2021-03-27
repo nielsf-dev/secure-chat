@@ -31,6 +31,7 @@ public class DemoServlet implements Servlet {
         String requestURI = http.getRequestURI();
         logger.info(requestURI);
 
+
         for (Enumeration<String> headerNames = http.getHeaderNames(); headerNames.hasMoreElements();) {
             String headerName = headerNames.nextElement();
             String headerValue = http.getHeader(headerName);

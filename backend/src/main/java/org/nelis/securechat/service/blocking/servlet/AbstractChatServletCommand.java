@@ -12,13 +12,19 @@ public abstract class AbstractChatServletCommand implements ChatServletCommand{
         this.sessionFactory = sessionFactory;
     }
 
-    protected abstract String doGetResponse(String request) throws IOException;
+    protected abstract String doGetResponse(String request) throws Exception;
 
     @Override
     public String getResponse(String request) throws IOException {
         Transaction tx = sessionFactory.getCurrentSession().beginTransaction();
-        String response = doGetResponse(request);
-        tx.commit();
-        return response;
+        try {
+            String response = doGetResponse(request);
+            tx.commit();
+            return response;
+        }
+        catch(Exception ex){
+            tx.rollback();
+            throw new IOException(ex);
+        }
     }
 }
