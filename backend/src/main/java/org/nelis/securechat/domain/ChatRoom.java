@@ -21,7 +21,7 @@ public class ChatRoom {
 
     @Id
     @GeneratedValue(strategy=IDENTITY)
-    private Long id;
+    private long id;
 
     private String name;
 
@@ -73,7 +73,7 @@ public class ChatRoom {
         logger.trace("sendChatMessage '{}' in ChatRoom '{}' door User '{}'", chatMessage.getMessage(), name, userFrom.getName());
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 

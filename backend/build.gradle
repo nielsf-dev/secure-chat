@@ -23,7 +23,7 @@ repositories {
 }
 
 shadowJar {
-    mainClassName = "org.nelis.App"
+    mainClassName = "org.nelis.securechat.App"
 }
 
 test{

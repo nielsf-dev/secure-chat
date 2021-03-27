@@ -9,7 +9,6 @@ import org.nelis.securechat.JsonHelper;
 import org.nelis.securechat.domain.ChatMessage;
 import org.nelis.securechat.domain.ChatRoom;
 import org.nelis.securechat.domain.ChatRoomMessage;
-import org.nelis.securechat.service.blocking.IChatRoomManager;
 import org.nelis.securechat.service.blocking.dao.ChatRoomDao;
 
 import java.io.IOException;

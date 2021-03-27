@@ -5,16 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.hibernate.SessionFactory;
 import org.nelis.securechat.JsonHelper;
-import org.nelis.securechat.service.blocking.IChatRoomManager;
+import org.nelis.securechat.service.blocking.ChatRoomManager;
 
 import java.io.IOException;
 
 public class CreateRoom extends AbstractChatServletCommand {
 
-    private IChatRoomManager chatRoomManager;
+    private ChatRoomManager chatRoomManager;
     private ObjectMapper objectMapper;
 
-    public CreateRoom(IChatRoomManager chatRoomManager, ObjectMapper objectMapper, SessionFactory sessionFactory)  {
+    public CreateRoom(ChatRoomManager chatRoomManager, ObjectMapper objectMapper, SessionFactory sessionFactory)  {
         super(sessionFactory);
         this.chatRoomManager = chatRoomManager;
         this.objectMapper = objectMapper;

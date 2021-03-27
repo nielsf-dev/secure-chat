@@ -6,15 +6,15 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.hibernate.SessionFactory;
 import org.nelis.securechat.JsonHelper;
 import org.nelis.securechat.domain.ChatMessage;
-import org.nelis.securechat.service.blocking.IChatRoomManager;
+import org.nelis.securechat.service.blocking.ChatRoomManager;
 
 import java.io.IOException;
 
 public class SendMessage extends AbstractChatServletCommand {
-    private IChatRoomManager chatRoomManager;
+    private ChatRoomManager chatRoomManager;
     private ObjectMapper objectMapper;
 
-    public SendMessage(IChatRoomManager chatRoomManager, ObjectMapper objectMapper, SessionFactory sessionFactory)  {
+    public SendMessage(ChatRoomManager chatRoomManager, ObjectMapper objectMapper, SessionFactory sessionFactory)  {
         super(sessionFactory);
         this.chatRoomManager = chatRoomManager;
         this.objectMapper = objectMapper;
