@@ -31,6 +31,7 @@ public class SendMessage extends AbstractChatServletCommand {
         long userid = jsonNode.get("userid").asLong();
         long chatroomid = jsonNode.get("chatroomid").asLong();
         String message = jsonNode.get("message").asText();
+        chatRoomManager.addUserToRoom(chatroomid, userid);
         boolean success = chatRoomManager.sendChatMessage(chatroomid, userid, new ChatMessage(message));
 
         // id returnen

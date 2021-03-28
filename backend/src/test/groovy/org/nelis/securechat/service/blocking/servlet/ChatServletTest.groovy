@@ -13,10 +13,6 @@ import javax.servlet.http.HttpServletRequest
 
 class ChatServletTest extends Specification {
 
-    def sessionFactory = Mock(SessionFactory)
-    def session = Mock(Session)
-    def tx = Mock(Transaction)
-
     def commands = new ArrayList<ChatServletCommand>()
     def chatServlet = new ChatServlet(commands)
     def servletResponse = Mock(ServletResponse)
@@ -24,11 +20,11 @@ class ChatServletTest extends Specification {
     def stringReader = new StringReader("{\"name\":\"mycoolroom\"}")
 
     def setup() {
-        commands.add(new CreateRoom(Mock(ChatRoomManager),new ObjectMapper(), sessionFactory))
+        def mock = Mock(ChatServletCommand)
+        mock.commandURI >> "/createroom"
+        mock.getResponse(_) >> "conjo"
+        commands.add(mock)
         servletResponse.getWriter() >> new PrintWriter(stringWriter)
-
-        sessionFactory.getCurrentSession() >> session
-        session.beginTransaction() >> tx
     }
 
     def "Succesvolle command"(){
