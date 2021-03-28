@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DaoTest {
+public class ChatRoomManagerIntegrationTest {
 
     private static DaoManager daoManager;
     private static Session currentSession;
@@ -41,50 +41,26 @@ public class DaoTest {
     }
 
     @Test
-    public void testUser(){
-        UserDao userDao = daoManager.getUserDao();
-
-        User newUser = new User("Het werkt jongee");
-        userDao.save(newUser);
-
-        List<User> all = userDao.findAll();
-        all.stream().forEach(user -> System.out.println(user.getName()));
-
-        User user = userDao.find(newUser.getId());
-        assertNotNull(user);
-    }
-
-    @Test
-    void relationTest() throws NotFoundException {
-        ChatRoomDao chatRoomDao = daoManager.getChatRoomDao();
-
-        ChatRoom chatRoom = chatRoomDao.find(3);
-        User firstUser = chatRoom.getUsers().stream().findFirst().get();
-        chatRoom.sendMessage(firstUser.getId(),new ChatMessage("yolings"));
-    }
-
-    @Test
     void testChatRoom() {
         ChatRoomDao chatRoomDao = daoManager.getChatRoomDao();
         UserDao userDoa = daoManager.getUserDao();
 
-        List<User> all = userDoa.findAll();
-        ChatRoom chatRoom = new ChatRoom("test");
-        User user1 = all.get(0);
-        chatRoom.insertUser(user1);
-        User user2 = all.get(1);
-        chatRoom.insertUser(user2);
-        chatRoomDao.save(chatRoom);
+        ChatRoomManager chatRoomManager = new ChatRoomManager(chatRoomDao, userDoa);
 
-        ChatRoomManager chatRoomManager = new ChatRoomManager(chatRoomDao, daoManager.getUserDao());
+        long chatRoomId = chatRoomManager.createChatRoom("testroom");
+        long user1Id = chatRoomManager.createUser("user1");
+        chatRoomManager.addUserToRoom(chatRoomId, user1Id);
 
-        boolean success = chatRoomManager.sendChatMessage(chatRoom.getId(), user1.getId(), new ChatMessage("cool message"));
+        long user2Id = chatRoomManager.createUser("user2");
+        chatRoomManager.addUserToRoom(chatRoomId, user2Id);
+
+        boolean success = chatRoomManager.sendChatMessage(chatRoomId, user1Id, new ChatMessage("cool message"));
         assertTrue(success);
 
-        success = chatRoomManager.sendChatMessage(chatRoom.getId(), user2.getId(), new ChatMessage("haai"));
+        success = chatRoomManager.sendChatMessage(chatRoomId, user2Id, new ChatMessage("haai"));
         assertTrue(success);
 
-        success = chatRoomManager.sendChatMessage(chatRoom.getId(), user1.getId(), new ChatMessage("doeei"));
+        success = chatRoomManager.sendChatMessage(chatRoomId, user1Id, new ChatMessage("doeei"));
         assertTrue(success);
     }
 }
