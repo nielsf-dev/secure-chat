@@ -31,7 +31,7 @@ open class ChatRoomManager(private val chatRoomDao: ChatRoomDao,
      * Maak een user aan als die nog niet bestaat
      */
     fun createUser(name: String):Long{
-        var user:User = userDao.findByName(name)
+        var user:User? = userDao.findByName(name)
         if(user == null) {
             user = User(name)
             userDao.save(user)
