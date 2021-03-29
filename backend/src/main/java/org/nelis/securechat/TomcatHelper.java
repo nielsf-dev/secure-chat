@@ -1,10 +1,11 @@
 package org.nelis.securechat;
 
 import org.apache.catalina.Context;
-import org.apache.catalina.LifecycleException;
 import org.apache.catalina.Server;
 import org.apache.catalina.startup.Tomcat;
-import org.nelis.securechat.domain.ChatRoom;
+import org.apache.tomcat.util.descriptor.web.FilterDef;
+import org.apache.tomcat.util.descriptor.web.FilterMap;
+import org.nelis.securechat.service.blocking.servlet.HibernateServletFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,16 @@ public class TomcatHelper {
 
             Tomcat.addServlet(ctx, "coolio", servlet);
             ctx.addServletMapping("/*", "coolio");
+
+            FilterDef filterDef = new FilterDef();
+            filterDef.setFilter(new HibernateServletFilter());
+            filterDef.setFilterName("myfilter");
+            ctx.addFilterDef(filterDef);
+
+            FilterMap filterMap = new FilterMap();
+            filterMap.setFilterName("myfilter");
+            filterMap.addURLPattern("/*");
+            ctx.addFilterMap(filterMap);
 
             tomcat.start();
             Server server = tomcat.getServer();

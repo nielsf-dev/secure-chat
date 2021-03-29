@@ -17,7 +17,7 @@ class DaoManager {
     val sessionFactory:SessionFactory
 
     init {
-        //https://www.baeldung.com/hibernate-5-bootstrapping-api
+        // https://www.baeldung.com/hibernate-5-bootstrapping-api
         val bootstrapRegistryBuilder = BootstrapServiceRegistryBuilder()
         val bootstrapRegistry = bootstrapRegistryBuilder.build()
 
