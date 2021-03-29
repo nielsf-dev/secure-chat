@@ -10,12 +10,11 @@ import org.nelis.securechat.service.blocking.ChatRoomManager;
 
 import java.io.IOException;
 
-public class SendMessage extends AbstractChatServletCommand {
+public class SendMessage implements ChatServletCommand {
     private ChatRoomManager chatRoomManager;
     private ObjectMapper objectMapper;
 
-    public SendMessage(ChatRoomManager chatRoomManager, ObjectMapper objectMapper, SessionFactory sessionFactory)  {
-        super(sessionFactory);
+    public SendMessage(ChatRoomManager chatRoomManager, ObjectMapper objectMapper)  {
         this.chatRoomManager = chatRoomManager;
         this.objectMapper = objectMapper;
     }
@@ -26,7 +25,7 @@ public class SendMessage extends AbstractChatServletCommand {
     }
 
     @Override
-    protected String doGetResponse(String request) throws IOException { // chatroom aanmaken obv naam
+    public String getResponse(String request) throws IOException {
         JsonNode jsonNode = objectMapper.readTree(request);
         long userid = jsonNode.get("userid").asLong();
         long chatroomid = jsonNode.get("chatroomid").asLong();

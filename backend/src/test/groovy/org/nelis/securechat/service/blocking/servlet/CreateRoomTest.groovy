@@ -14,14 +14,9 @@ class CreateRoomTest extends Specification {
     def userDao = Mock(UserDao)
     def chatroomDao = Mock(ChatRoomDao)
     def chatRoomManager = new ChatRoomManager(chatroomDao, userDao)
-    def sessionFactory = Mock(SessionFactory)
-    def session = Mock(Session)
-    def tx = Mock(Transaction)
-    def createRoom = new CreateRoom(chatRoomManager, objectMapper, sessionFactory)
+    def createRoom = new CreateRoom(chatRoomManager, objectMapper)
 
     def setup(){
-        sessionFactory.getCurrentSession() >> session
-        session.beginTransaction() >> tx
     }
 
     def "CreatRoom (correct)"(){

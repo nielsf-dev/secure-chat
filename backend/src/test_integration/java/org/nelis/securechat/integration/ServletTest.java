@@ -1,33 +1,28 @@
 package org.nelis.securechat.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hibernate.Transaction;
 import org.junit.jupiter.api.Test;
 import org.nelis.securechat.App;
-import org.nelis.securechat.TomcatHelper;
-import org.nelis.securechat.service.blocking.ChatRoomManager;
 import org.nelis.securechat.service.blocking.dao.DaoManager;
 import org.nelis.securechat.service.blocking.servlet.ChatServlet;
-import org.nelis.securechat.service.blocking.servlet.CreateRoom;
-import org.nelis.securechat.service.blocking.servlet.ChatServletCommand;
+import org.nelis.securechat.service.blocking.servlet.TxFilter;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.nelis.securechat.TomcatHelper.startTomcat;
 
 public class ServletTest {
     @Test
     public void testServlet() throws IOException, InterruptedException {
-        ChatServlet chatServlet = App.createChatServlet();
+        DaoManager daoManager = new DaoManager();
+        ChatServlet chatServlet = App.createChatServlet(daoManager);
+        TxFilter txFilter = App.createChatFilter(daoManager);
 
         Thread t = new Thread(() ->{
-            startTomcat(chatServlet,8082);
+            startTomcat(chatServlet, txFilter, 8082);
         });
         t.start();
 

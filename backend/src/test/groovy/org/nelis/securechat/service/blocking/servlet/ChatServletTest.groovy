@@ -20,14 +20,16 @@ class ChatServletTest extends Specification {
     def stringReader = new StringReader("{\"name\":\"mycoolroom\"}")
 
     def setup() {
+        // command aanmaken met URI
         def mock = Mock(ChatServletCommand)
         mock.commandURI >> "/createroom"
         mock.getResponse(_) >> "conjo"
         commands.add(mock)
+
         servletResponse.getWriter() >> new PrintWriter(stringWriter)
     }
 
-    def "Succesvolle command"(){
+    def "Matching URI"(){
         given:
         def servletRequest = Mock(HttpServletRequest)
         servletRequest.getRequestURI() >> "/createroom"
@@ -40,7 +42,7 @@ class ChatServletTest extends Specification {
         notThrown()
     }
 
-    def "Foute command"(){
+    def "Foute URI"(){
         given:
         def servletRequest = Mock(HttpServletRequest)
         servletRequest.getRequestURI() >> "/bollocks2"

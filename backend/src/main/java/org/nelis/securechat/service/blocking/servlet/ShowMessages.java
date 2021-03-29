@@ -13,12 +13,11 @@ import org.nelis.securechat.service.blocking.dao.ChatRoomDao;
 
 import java.io.IOException;
 
-public class ShowMessages extends AbstractChatServletCommand {
+public class ShowMessages implements ChatServletCommand {
     private ChatRoomDao chatRoomDao;
     private ObjectMapper objectMapper;
 
-    public ShowMessages(ChatRoomDao chatRoomDao, ObjectMapper objectMapper, SessionFactory sessionFactory)  {
-        super(sessionFactory);
+    public ShowMessages(ChatRoomDao chatRoomDao, ObjectMapper objectMapper)  {
         this.chatRoomDao = chatRoomDao;
         this.objectMapper = objectMapper;
     }
@@ -29,12 +28,12 @@ public class ShowMessages extends AbstractChatServletCommand {
     }
 
     @Override
-    protected String doGetResponse(String request) throws Exception { // chatroom aanmaken obv naam
+    public String getResponse(String request) throws IOException {
         JsonNode jsonNode = objectMapper.readTree(request);
         long chatroomid = jsonNode.get("chatroomid").asLong();
         ChatRoom chatRoom = chatRoomDao.find(chatroomid);
         if(chatRoom == null)
-            throw new Exception("Onbekende chatroom");
+            throw new IOException("Onbekende chatroom");
 
         // id returnen
         ObjectNode result = objectMapper.createObjectNode();
@@ -44,4 +43,5 @@ public class ShowMessages extends AbstractChatServletCommand {
         }
         return JsonHelper.objectNodeToString(objectMapper, result);
     }
+
 }

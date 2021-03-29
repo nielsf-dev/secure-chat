@@ -5,17 +5,17 @@ import org.apache.catalina.Server;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
-import org.nelis.securechat.service.blocking.servlet.HibernateServletFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import java.io.File;
 
 public class TomcatHelper {
     private static Logger logger = LoggerFactory.getLogger(TomcatHelper.class);
 
-    public static void startTomcat(Servlet servlet, int port) {
+    public static void startTomcat(Servlet servlet, Filter filter, int port) {
         try {
             Tomcat tomcat = new Tomcat();
             tomcat.setPort(port);
@@ -27,7 +27,7 @@ public class TomcatHelper {
             ctx.addServletMapping("/*", "coolio");
 
             FilterDef filterDef = new FilterDef();
-            filterDef.setFilter(new HibernateServletFilter());
+            filterDef.setFilter(filter);
             filterDef.setFilterName("myfilter");
             ctx.addFilterDef(filterDef);
 

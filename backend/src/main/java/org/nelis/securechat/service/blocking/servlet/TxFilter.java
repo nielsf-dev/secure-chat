@@ -6,11 +6,11 @@ import org.hibernate.Transaction;
 import javax.servlet.*;
 import java.io.IOException;
 
-public class HibernateServletFilter implements Filter {
+public class TxFilter implements Filter {
 
     private SessionFactory sessionFactory;
 
-    public HibernateServletFilter(SessionFactory sessionFactory) {
+    public TxFilter(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
