@@ -1,10 +1,6 @@
 package org.nelis.securechat.service.blocking.servlet
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import org.hibernate.Session
-import org.hibernate.SessionFactory
-import org.hibernate.Transaction
-import org.nelis.securechat.service.blocking.ChatRoomManager
+import org.nelis.securechat.service.blocking.servlet.commands.Command
 import spock.lang.Specification
 
 import javax.servlet.ServletException
@@ -13,7 +9,7 @@ import javax.servlet.http.HttpServletRequest
 
 class ChatServletTest extends Specification {
 
-    def commands = new ArrayList<ChatServletCommand>()
+    def commands = new ArrayList<Command>()
     def chatServlet = new ChatServlet(commands)
     def servletResponse = Mock(ServletResponse)
     def stringWriter = new StringWriter()
@@ -21,7 +17,7 @@ class ChatServletTest extends Specification {
 
     def setup() {
         // command aanmaken met URI
-        def mock = Mock(ChatServletCommand)
+        def mock = Mock(Command)
         mock.commandURI >> "/createroom"
         mock.getResponse(_) >> "conjo"
         commands.add(mock)

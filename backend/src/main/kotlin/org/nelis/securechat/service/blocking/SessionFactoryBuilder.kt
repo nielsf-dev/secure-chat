@@ -1,4 +1,4 @@
-package org.nelis.securechat.service.blocking.dao
+package org.nelis.securechat.service.blocking
 
 import org.hibernate.SessionFactory
 import org.hibernate.boot.MetadataSources
@@ -10,14 +10,9 @@ import org.nelis.securechat.domain.ChatRoom
 import org.nelis.securechat.domain.ChatRoomMessage
 import org.nelis.securechat.domain.User
 
-class DaoManager {
+class SessionFactoryBuilder {
 
-    val chatRoomDao: ChatRoomDao
-    val userDao: UserDao
-    val sessionFactory:SessionFactory
-
-    init {
-        // https://www.baeldung.com/hibernate-5-bootstrapping-api
+    fun build(): SessionFactory{
         val bootstrapRegistryBuilder = BootstrapServiceRegistryBuilder()
         val bootstrapRegistry = bootstrapRegistryBuilder.build()
 
@@ -34,10 +29,6 @@ class DaoManager {
             .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
             .build()
 
-        sessionFactory = metadata.sessionFactoryBuilder
-            .build()
-
-        chatRoomDao = ChatRoomDaoImp(sessionFactory)
-        userDao = UserDaoImp(sessionFactory)
+        return metadata.sessionFactoryBuilder.build()
     }
 }

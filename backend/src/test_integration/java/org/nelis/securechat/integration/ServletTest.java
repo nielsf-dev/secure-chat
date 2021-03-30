@@ -1,8 +1,10 @@
 package org.nelis.securechat.integration;
 
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
 import org.nelis.securechat.App;
-import org.nelis.securechat.service.blocking.dao.DaoManager;
+import org.nelis.securechat.service.blocking.DaoRegistryImp;
+import org.nelis.securechat.service.blocking.SessionFactoryBuilder;
 import org.nelis.securechat.service.blocking.servlet.ChatServlet;
 import org.nelis.securechat.service.blocking.servlet.TxFilter;
 
@@ -17,9 +19,13 @@ import static org.nelis.securechat.TomcatHelper.startTomcat;
 public class ServletTest {
     @Test
     public void testServlet() throws IOException, InterruptedException {
-        DaoManager daoManager = new DaoManager();
-        ChatServlet chatServlet = App.createChatServlet(daoManager);
-        TxFilter txFilter = App.createChatFilter(daoManager);
+
+        SessionFactoryBuilder sessionFactoryBuilder = new SessionFactoryBuilder();
+        SessionFactory sessionFactory = sessionFactoryBuilder.build();
+
+        DaoRegistryImp daoRegistry = new DaoRegistryImp(sessionFactory);
+        ChatServlet chatServlet = App.createChatServlet(daoRegistry);
+        TxFilter txFilter = App.createChatFilter(sessionFactory);
 
         Thread t = new Thread(() ->{
             startTomcat(chatServlet, txFilter, 8082);

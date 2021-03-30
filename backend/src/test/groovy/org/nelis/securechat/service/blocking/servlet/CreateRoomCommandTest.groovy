@@ -1,20 +1,18 @@
 package org.nelis.securechat.service.blocking.servlet
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.hibernate.Session
-import org.hibernate.SessionFactory
-import org.hibernate.Transaction
 import org.nelis.securechat.service.blocking.ChatRoomManager
 import org.nelis.securechat.service.blocking.dao.ChatRoomDao
 import org.nelis.securechat.service.blocking.dao.UserDao
+import org.nelis.securechat.service.blocking.servlet.commands.CreateRoomCommand
 import spock.lang.Specification
 
-class CreateRoomTest extends Specification {
+class CreateRoomCommandTest extends Specification {
     def objectMapper = new ObjectMapper()
     def userDao = Mock(UserDao)
     def chatroomDao = Mock(ChatRoomDao)
     def chatRoomManager = new ChatRoomManager(chatroomDao, userDao)
-    def createRoom = new CreateRoom(chatRoomManager, objectMapper)
+    def createRoom = new CreateRoomCommand(chatRoomManager, objectMapper)
 
     def setup(){
     }

@@ -10,7 +10,7 @@
 
     <logger name="org.hibernate.sql" level="TRACE"/>
 
-    <root level="info">
+    <root level="trace">
         <appender-ref ref="STDOUT" />
     </root>
 

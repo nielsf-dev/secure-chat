@@ -4,9 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.undertow.Undertow;
 import io.undertow.util.Headers;
 import org.apache.catalina.LifecycleException;
+import org.hibernate.SessionFactory;
 import org.nelis.securechat.service.blocking.ChatRoomManager;
-import org.nelis.securechat.service.blocking.dao.DaoManager;
+import org.nelis.securechat.service.blocking.DaoRegistry;
+import org.nelis.securechat.service.blocking.DaoRegistryImp;
+import org.nelis.securechat.service.blocking.SessionFactoryBuilder;
 import org.nelis.securechat.service.blocking.servlet.*;
+import org.nelis.securechat.service.blocking.servlet.commands.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,36 +22,38 @@ public class App {
 
     public static void main(String[] args) throws LifecycleException {
         logger.info("Starting up data access..");
-        DaoManager daoManager = new DaoManager();
+        SessionFactoryBuilder sessionFactoryBuilder = new SessionFactoryBuilder();
+        SessionFactory sessionFactory = sessionFactoryBuilder.build();
+        DaoRegistry daoRegistry = new DaoRegistryImp(sessionFactory);
 
         logger.info("Creating ChatServlet..");
-        ChatServlet chatServlet = createChatServlet(daoManager);
+        ChatServlet chatServlet = createChatServlet(daoRegistry);
 
         logger.info("Starting Tomcat..");
-        TxFilter filter = createChatFilter(daoManager);
+        TxFilter filter = createChatFilter(sessionFactory);
         TomcatHelper.startTomcat(chatServlet, filter,8082);
 
         // curl --data-ascii "{\"name\":\"test\"}" http://localhost:8082/createroom
     }
 
-    public static TxFilter createChatFilter(DaoManager daoManager) {
-        TxFilter filter = new TxFilter(daoManager.getSessionFactory());
+    public static TxFilter createChatFilter(SessionFactory sessionFactory) {
+        TxFilter filter = new TxFilter(sessionFactory);
         return filter;
     }
 
-    public static ChatServlet createChatServlet(DaoManager daoManager) {
-        ChatRoomManager chatRoomManager = new ChatRoomManager(daoManager.getChatRoomDao(), daoManager.getUserDao());
+    public static ChatServlet createChatServlet(DaoRegistry daoRegistry) {
+        ChatRoomManager chatRoomManager = new ChatRoomManager(daoRegistry.getChatRoomDao(), daoRegistry.getUserDao());
 
         ObjectMapper objectMapper = new ObjectMapper();
-        CreateRoom createRoom = new CreateRoom(chatRoomManager,objectMapper);
-        CreateUser createUser = new CreateUser(chatRoomManager,objectMapper);
-        SendMessage sendMessage = new SendMessage(chatRoomManager,objectMapper);
-        ShowMessages showMessages = new ShowMessages(daoManager.getChatRoomDao(), objectMapper);
+        CreateRoomCommand createRoomCommand = new CreateRoomCommand(chatRoomManager,objectMapper);
+        CreateUserCommand createUserCommand = new CreateUserCommand(chatRoomManager,objectMapper);
+        SendMessageCommand sendMessageCommand = new SendMessageCommand(chatRoomManager,objectMapper);
+        ShowMessagesCommand showMessages = new ShowMessagesCommand(daoRegistry.getChatRoomDao(), objectMapper);
 
-        List<ChatServletCommand> commands = new ArrayList<>();
-        commands.add(createRoom);
-        commands.add(createUser);
-        commands.add(sendMessage);
+        List<Command> commands = new ArrayList<>();
+        commands.add(createRoomCommand);
+        commands.add(createUserCommand);
+        commands.add(sendMessageCommand);
         commands.add(showMessages);
 
         ChatServlet chatServlet = new ChatServlet(commands);

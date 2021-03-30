@@ -1,5 +1,6 @@
 package org.nelis.securechat.service.blocking.servlet;
 
+import org.nelis.securechat.service.blocking.servlet.commands.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +17,9 @@ public class ChatServlet implements Servlet {
     private static Logger logger = LoggerFactory.getLogger(ChatServlet.class);
     private ServletConfig config;
 
-    private List<ChatServletCommand> commands;
+    private List<Command> commands;
 
-    public ChatServlet(List<ChatServletCommand> commands) {
+    public ChatServlet(List<Command> commands) {
         this.commands = commands;
     }
 
@@ -36,7 +37,7 @@ public class ChatServlet implements Servlet {
     public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
         HttpServletRequest httpRequest = (HttpServletRequest)servletRequest;
         logger.info("Chatservlet request URI: {}", httpRequest.getRequestURI());
-        ChatServletCommand chatServletCommand = commands.stream()
+        Command chatServletCommand = commands.stream()
                 .filter(sc -> sc.getCommandURI().equalsIgnoreCase(httpRequest.getRequestURI()))
                 .findAny()
                 .orElseThrow(() -> new ServletException("Command niet gevonden"));

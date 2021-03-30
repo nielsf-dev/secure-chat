@@ -1,6 +1,5 @@
 package org.nelis.securechat.integration;
 
-import javassist.NotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,28 +7,26 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.nelis.securechat.domain.ChatMessage;
-import org.nelis.securechat.domain.ChatRoom;
-import org.nelis.securechat.domain.User;
-import org.nelis.securechat.service.blocking.dao.DaoManager;
+import org.nelis.securechat.service.blocking.DaoRegistryImp;
 import org.nelis.securechat.service.blocking.ChatRoomManager;
+import org.nelis.securechat.service.blocking.SessionFactoryBuilder;
 import org.nelis.securechat.service.blocking.dao.ChatRoomDao;
 import org.nelis.securechat.service.blocking.dao.UserDao;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ChatRoomManagerIntegrationTest {
 
-    private static DaoManager daoManager;
+    private static DaoRegistryImp daoRegistry;
     private static Session currentSession;
     private static Transaction tx;
 
     @BeforeAll
     static void beforeAll() {
-        daoManager = new DaoManager();
+        SessionFactoryBuilder sessionFactoryBuilder = new SessionFactoryBuilder();
+        SessionFactory sessionFactory = sessionFactoryBuilder.build();
+        daoRegistry = new DaoRegistryImp(sessionFactory);
 
-        SessionFactory sessionFactory = daoManager.getSessionFactory();
         currentSession = sessionFactory.getCurrentSession();
 
         tx = currentSession.beginTransaction();
@@ -42,8 +39,8 @@ public class ChatRoomManagerIntegrationTest {
 
     @Test
     void testChatRoom() {
-        ChatRoomDao chatRoomDao = daoManager.getChatRoomDao();
-        UserDao userDoa = daoManager.getUserDao();
+        ChatRoomDao chatRoomDao = daoRegistry.getChatRoomDao();
+        UserDao userDoa = daoRegistry.getUserDao();
 
         ChatRoomManager chatRoomManager = new ChatRoomManager(chatRoomDao, userDoa);
 

@@ -23,24 +23,21 @@ public class TomcatHelper {
             String absolutePath = new File(".").getAbsolutePath();
             Context ctx = tomcat.addContext("/", absolutePath);
 
-            Tomcat.addServlet(ctx, "coolio", servlet);
-            ctx.addServletMapping("/*", "coolio");
+            Tomcat.addServlet(ctx, "servlet", servlet);
+            ctx.addServletMapping("/*", "servlet");
 
             FilterDef filterDef = new FilterDef();
             filterDef.setFilter(filter);
-            filterDef.setFilterName("myfilter");
+            filterDef.setFilterName("filter");
             ctx.addFilterDef(filterDef);
 
             FilterMap filterMap = new FilterMap();
-            filterMap.setFilterName("myfilter");
+            filterMap.setFilterName("filter");
             filterMap.addURLPattern("/*");
             ctx.addFilterMap(filterMap);
 
             tomcat.start();
             Server server = tomcat.getServer();
-            server.addLifecycleListener(event -> {
-                logger.info("lifecycle event: {}", event.getType());
-            });
             server.await();
         }
         catch (Exception exception){

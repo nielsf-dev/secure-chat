@@ -1,41 +1,37 @@
-package org.nelis.securechat.service.blocking.servlet;
+package org.nelis.securechat.service.blocking.servlet.commands;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.hibernate.SessionFactory;
 import org.nelis.securechat.JsonHelper;
-import org.nelis.securechat.domain.ChatMessage;
 import org.nelis.securechat.service.blocking.ChatRoomManager;
 
 import java.io.IOException;
 
-public class SendMessage implements ChatServletCommand {
+public class CreateUserCommand implements Command {
     private ChatRoomManager chatRoomManager;
     private ObjectMapper objectMapper;
 
-    public SendMessage(ChatRoomManager chatRoomManager, ObjectMapper objectMapper)  {
+    public CreateUserCommand(ChatRoomManager chatRoomManager, ObjectMapper objectMapper)  {
         this.chatRoomManager = chatRoomManager;
         this.objectMapper = objectMapper;
     }
 
     @Override
     public String getCommandURI() {
-        return "/sendmessage";
+        return "/createuser";
     }
 
     @Override
     public String getResponse(String request) throws IOException {
+        // chatroom aanmaken obv naam
         JsonNode jsonNode = objectMapper.readTree(request);
-        long userid = jsonNode.get("userid").asLong();
-        long chatroomid = jsonNode.get("chatroomid").asLong();
-        String message = jsonNode.get("message").asText();
-        chatRoomManager.addUserToRoom(chatroomid, userid);
-        boolean success = chatRoomManager.sendChatMessage(chatroomid, userid, new ChatMessage(message));
+        String chatRoomName = jsonNode.get("name").asText();
+        Long userId = chatRoomManager.createUser(chatRoomName);
 
         // id returnen
         ObjectNode result = objectMapper.createObjectNode();
-        result.put("success", success);
+        result.put("id", userId);
         return JsonHelper.objectNodeToString(objectMapper, result);
     }
 }

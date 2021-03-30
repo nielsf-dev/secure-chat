@@ -1,23 +1,21 @@
-package org.nelis.securechat.service.blocking.servlet;
+package org.nelis.securechat.service.blocking.servlet.commands;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.hibernate.SessionFactory;
 import org.nelis.securechat.JsonHelper;
-import org.nelis.securechat.domain.ChatMessage;
 import org.nelis.securechat.domain.ChatRoom;
 import org.nelis.securechat.domain.ChatRoomMessage;
 import org.nelis.securechat.service.blocking.dao.ChatRoomDao;
 
 import java.io.IOException;
 
-public class ShowMessages implements ChatServletCommand {
+public class ShowMessagesCommand implements Command {
     private ChatRoomDao chatRoomDao;
     private ObjectMapper objectMapper;
 
-    public ShowMessages(ChatRoomDao chatRoomDao, ObjectMapper objectMapper)  {
+    public ShowMessagesCommand(ChatRoomDao chatRoomDao, ObjectMapper objectMapper)  {
         this.chatRoomDao = chatRoomDao;
         this.objectMapper = objectMapper;
     }

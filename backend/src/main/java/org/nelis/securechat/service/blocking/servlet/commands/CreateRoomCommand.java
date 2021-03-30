@@ -1,38 +1,37 @@
-package org.nelis.securechat.service.blocking.servlet;
+package org.nelis.securechat.service.blocking.servlet.commands;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.hibernate.SessionFactory;
 import org.nelis.securechat.JsonHelper;
 import org.nelis.securechat.service.blocking.ChatRoomManager;
 
 import java.io.IOException;
 
-public class CreateUser implements ChatServletCommand {
+public class CreateRoomCommand implements Command {
+
     private ChatRoomManager chatRoomManager;
     private ObjectMapper objectMapper;
 
-    public CreateUser(ChatRoomManager chatRoomManager, ObjectMapper objectMapper)  {
+    public CreateRoomCommand(ChatRoomManager chatRoomManager, ObjectMapper objectMapper)  {
         this.chatRoomManager = chatRoomManager;
         this.objectMapper = objectMapper;
     }
 
     @Override
     public String getCommandURI() {
-        return "/createuser";
+        return "/createroom";
     }
 
     @Override
     public String getResponse(String request) throws IOException {
-        // chatroom aanmaken obv naam
         JsonNode jsonNode = objectMapper.readTree(request);
         String chatRoomName = jsonNode.get("name").asText();
-        Long userId = chatRoomManager.createUser(chatRoomName);
+        Long chatRoomID = chatRoomManager.createChatRoom(chatRoomName);
 
         // id returnen
         ObjectNode result = objectMapper.createObjectNode();
-        result.put("id", userId);
+        result.put("id", chatRoomID);
         return JsonHelper.objectNodeToString(objectMapper, result);
     }
 }
