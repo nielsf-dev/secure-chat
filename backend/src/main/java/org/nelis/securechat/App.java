@@ -66,7 +66,7 @@ public class App {
                 .setHandler(exchange -> {
                                 exchange.getResponseHeaders()
                                 .put(Headers.CONTENT_TYPE, "text/plain");
-                                exchange.getResponseSender().send("Hello Baeldung");
+                                exchange.getResponseSender().send("yolo");
                            })
                 .build();
         server.start();
