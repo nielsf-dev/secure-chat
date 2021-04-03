@@ -17,7 +17,7 @@ import java.util.List;
 
 public class Application {
 
-    private static Logger logger = LoggerFactory.getLogger(Application.class);
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
     private static ObjectMapper objectMapper = new ObjectMapper();
     static String backendUrl = "http://localhost:8082/";
 

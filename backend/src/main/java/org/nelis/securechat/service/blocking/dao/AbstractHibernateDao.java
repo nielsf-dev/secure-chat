@@ -9,7 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public abstract class AbstractHibernateDao<T> implements HibernateDao<T> {
+public abstract class AbstractHibernateDao<T> implements Dao<T> {
 
     private final Class<T> type;
     private SessionFactory sessionFactory;
