@@ -32,7 +32,7 @@ public class SendMessageCommand implements Command {
         chatRoomManager.addUserToRoom(chatroomid, userid);
         boolean success = chatRoomManager.sendChatMessage(chatroomid, userid, new ChatMessage(message));
 
-        // id returnen
+        // success returnen
         ObjectNode result = objectMapper.createObjectNode();
         result.put("success", success);
         return JsonHelper.objectNodeToString(objectMapper, result);

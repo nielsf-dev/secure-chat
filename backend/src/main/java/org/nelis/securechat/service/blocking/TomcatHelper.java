@@ -1,4 +1,4 @@
-package org.nelis.securechat;
+package org.nelis.securechat.service.blocking;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.Server;
@@ -24,7 +24,7 @@ public class TomcatHelper {
             Context ctx = tomcat.addContext("/", absolutePath);
 
             Tomcat.addServlet(ctx, "servlet", servlet);
-            ctx.addServletMapping("/*", "servlet");
+            ctx.addServletMappingDecoded("/*", "servlet");
 
             FilterDef filterDef = new FilterDef();
             filterDef.setFilter(filter);

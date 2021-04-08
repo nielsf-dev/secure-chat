@@ -14,7 +14,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import static org.nelis.securechat.TomcatHelper.startTomcat;
+import static org.nelis.securechat.service.blocking.TomcatHelper.startTomcat;
 
 public class ServletTest {
     @Test

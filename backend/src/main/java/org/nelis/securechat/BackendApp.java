@@ -5,10 +5,7 @@ import io.undertow.Undertow;
 import io.undertow.util.Headers;
 import org.apache.catalina.LifecycleException;
 import org.hibernate.SessionFactory;
-import org.nelis.securechat.service.blocking.ChatRoomManager;
-import org.nelis.securechat.service.blocking.DaoRegistry;
-import org.nelis.securechat.service.blocking.DaoRegistryImp;
-import org.nelis.securechat.service.blocking.SessionFactoryBuilder;
+import org.nelis.securechat.service.blocking.*;
 import org.nelis.securechat.service.blocking.servlet.*;
 import org.nelis.securechat.service.blocking.servlet.commands.*;
 import org.slf4j.Logger;
@@ -66,7 +63,7 @@ public class BackendApp {
                 .setHandler(exchange -> {
                                 exchange.getResponseHeaders()
                                 .put(Headers.CONTENT_TYPE, "text/plain");
-                                exchange.getResponseSender().send("Hello Baeldung");
+                                exchange.getResponseSender().send("yolo");
                            })
                 .build();
         server.start();
