@@ -2,7 +2,7 @@ package org.nelis.securechat.integration;
 
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
-import org.nelis.securechat.App;
+import org.nelis.securechat.BackendApp;
 import org.nelis.securechat.service.blocking.DaoRegistryImp;
 import org.nelis.securechat.service.blocking.SessionFactoryBuilder;
 import org.nelis.securechat.service.blocking.servlet.ChatServlet;
@@ -24,8 +24,8 @@ public class ServletTest {
         SessionFactory sessionFactory = sessionFactoryBuilder.build();
 
         DaoRegistryImp daoRegistry = new DaoRegistryImp(sessionFactory);
-        ChatServlet chatServlet = App.createChatServlet(daoRegistry);
-        TxFilter txFilter = App.createChatFilter(sessionFactory);
+        ChatServlet chatServlet = BackendApp.createChatServlet(daoRegistry);
+        TxFilter txFilter = BackendApp.createChatFilter(sessionFactory);
 
         Thread t = new Thread(() ->{
             startTomcat(chatServlet, txFilter, 8082);

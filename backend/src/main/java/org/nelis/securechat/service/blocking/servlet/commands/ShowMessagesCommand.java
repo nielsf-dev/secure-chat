@@ -33,11 +33,16 @@ public class ShowMessagesCommand implements Command {
         if(chatRoom == null)
             throw new IOException("Onbekende chatroom");
 
-        // id returnen
+        // messages returnen
         ObjectNode result = objectMapper.createObjectNode();
         ArrayNode messagesNodes = result.putArray("messages");
         for (ChatRoomMessage message : chatRoom.getMessages()) {
-            messagesNodes.add(message.getChatMessage().getMessage());
+            // per message een node aanmaken
+            ObjectNode messageNode = objectMapper.createObjectNode();
+            messageNode.put("id", message.getId());
+            messageNode.put("user", message.getUser().getName());
+            messageNode.put("message", message.getChatMessage().getMessage());
+            messagesNodes.add(messageNode);
         }
         return JsonHelper.objectNodeToString(objectMapper, result);
     }

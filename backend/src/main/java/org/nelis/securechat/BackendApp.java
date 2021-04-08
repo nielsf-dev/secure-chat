@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class App {
-    private static Logger logger = LoggerFactory.getLogger(App.class);
+public class BackendApp {
+    private static Logger logger = LoggerFactory.getLogger(BackendApp.class);
 
     public static void main(String[] args) throws LifecycleException {
         logger.info("Starting up data access..");

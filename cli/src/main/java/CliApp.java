@@ -1,23 +1,20 @@
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 
-public class Application {
+public class CliApp {
 
-    private static Logger logger = LoggerFactory.getLogger(Application.class);
+    private static Logger logger = LoggerFactory.getLogger(CliApp.class);
     private static ObjectMapper objectMapper = new ObjectMapper();
     static String backendUrl = "http://localhost:8082/";
 
@@ -68,7 +65,8 @@ public class Application {
         System.out.println("\n\nChatroom: \n");
         JsonNode messages = showmessages.get("messages");
         for(JsonNode message : messages){
-            System.out.println(message.asText());
+            ChatMessage chatMessage = objectMapper.treeToValue(message, ChatMessage.class);
+            System.out.println(chatMessage.getMessage());
         }
     }
 

@@ -1,4 +1,4 @@
-package org.nelis.securechat.service.blocking.servlet
+package org.nelis.securechat.service.blocking.servlet.commands
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.nelis.securechat.service.blocking.ChatRoomManager
