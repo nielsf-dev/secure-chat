@@ -26,4 +26,8 @@ public class ChatMessage {
     public void setUser(String user) {
         this.user = user;
     }
+
+    public void printToConsole() {
+        System.out.println(message);
+    }
 }

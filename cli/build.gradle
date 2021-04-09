@@ -14,8 +14,12 @@ repositories {
     mavenCentral()
 }
 
-shadowJar {
+application {
     mainClassName = "ConsoleTest"
+}
+
+shadowJar {
+    mainClassName = "CliApp"
 }
 
 dependencies {

@@ -6,13 +6,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.http.HttpRequest;
 
 public class TxFilter implements Filter {
 
     private static Logger logger = LoggerFactory.getLogger(TxFilter.class);
 
     private SessionFactory sessionFactory;
+
+    private static Object locker = new Object();
+
 
     public TxFilter(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -23,24 +28,33 @@ public class TxFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public synchronized void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
         Transaction tx = null;
 
         try {
+            logger.info("In the filter for request: " + ((HttpServletRequest)request).getRequestURI());
+
             logger.trace("Starting transaction..");
             tx = sessionFactory.getCurrentSession().beginTransaction();
             chain.doFilter(request, response);
 
+            logger.trace("Committing transaction..");
             tx.commit();
-            logger.trace("Committed!");
+            sessionFactory.getCurrentSession().close();
+            logger.info("Transaction committed");
         }
         catch(Exception ex){
-            if(tx != null)
-                tx.rollback();
-
             String errMsg = "Error tijdens servlet execution";
             logger.error(errMsg, ex);
-            throw new ServletException(errMsg, ex);
+
+            if(tx != null) {
+                logger.error("Rolling back transaction..");
+                tx.rollback();
+                logger.error("Transaction rolled back");
+            }
+
+            throw new ServletException(ex);
         }
     }
 

@@ -1,6 +1,8 @@
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import jline.TerminalFactory;
+import org.fusesource.jansi.Ansi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,12 +13,18 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class CliApp {
 
     private static Logger logger = LoggerFactory.getLogger(CliApp.class);
     private static ObjectMapper objectMapper = new ObjectMapper();
     static String backendUrl = "http://localhost:8082/";
+    private static int height;
+    private static int terminalWidth;
+    private static MessageDisplay messageDisplay;
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -26,6 +34,10 @@ public class CliApp {
 
         String userName = args[0];
         String chatRoomName = args[1];
+
+        height = TerminalFactory.get().getHeight();
+        terminalWidth = TerminalFactory.get().getWidth();
+        messageDisplay = new MessageDisplay(height-5);
 
         // user aanmaken
         ObjectNode createUser = objectMapper.createObjectNode();
@@ -62,12 +74,15 @@ public class CliApp {
         showMessages.put("chatroomid", roomId);
         JsonNode showmessages = getResponseNode("showmessages", showMessages);
 
-        System.out.println("\n\nChatroom: \n");
         JsonNode messages = showmessages.get("messages");
+        ArrayList<ChatMessage> chatMessages = new ArrayList<>();
         for(JsonNode message : messages){
             ChatMessage chatMessage = objectMapper.treeToValue(message, ChatMessage.class);
-            System.out.println(chatMessage.getMessage());
+            chatMessages.add(chatMessage);
         }
+
+        System.out.println(ansi().eraseScreen());
+        messageDisplay.render(chatMessages);
     }
 
     private static JsonNode getResponseNode(String command, ObjectNode requestNode) throws IOException, InterruptedException {

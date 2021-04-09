@@ -16,6 +16,7 @@ public class ConsoleTest {
 
          AnsiConsole.systemInstall();
 
+         System.out.println(ansi().eraseScreen());
          System.out.println(ansi().cursor(10, 50).render("nu dan"));
 
         int height = TerminalFactory.get().getHeight();

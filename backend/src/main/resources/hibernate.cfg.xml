@@ -19,7 +19,7 @@
         <property name="connection.password">toor</property>
 
         <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">1</property>
+        <property name="connection.pool_size">100</property>
 
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
