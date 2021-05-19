@@ -11,7 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "chatmessage")
 public class ChatMessage {
     @Id
-    @GeneratedValue(strategy=IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "text")

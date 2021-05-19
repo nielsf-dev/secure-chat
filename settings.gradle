@@ -9,3 +9,4 @@
 rootProject.name = 'secure-chat'
 include 'backend'
 include 'cli'
+include 'domain'

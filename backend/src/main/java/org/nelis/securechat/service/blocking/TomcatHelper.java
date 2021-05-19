@@ -13,7 +13,7 @@ import javax.servlet.Servlet;
 import java.io.File;
 
 public class TomcatHelper {
-    private static Logger logger = LoggerFactory.getLogger(TomcatHelper.class);
+    private static final Logger logger = LoggerFactory.getLogger(TomcatHelper.class);
 
     public static void startTomcat(Servlet servlet, Filter filter, int port) {
         try {

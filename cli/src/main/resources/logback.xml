@@ -20,7 +20,10 @@
         <appender-ref ref="FILE" />
     </logger>
 
-    <root level="INFO">
+    <logger name="org.hibernate" level="OFF"/>
+
+
+    <root level="TRACE">
 <!--        <appender-ref ref="STDOUT" />-->
     </root>
 

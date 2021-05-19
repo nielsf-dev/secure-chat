@@ -18,3 +18,5 @@ default-compile
 /cli/build/tmp/compileJava/
 /buildSrc/build/
 /buildSrc/.gradle/
+/backend/secure-chat.log
+/secure-chat.log

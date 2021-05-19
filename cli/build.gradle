@@ -15,7 +15,7 @@ repositories {
 }
 
 application {
-    mainClassName = "ConsoleTest"
+    mainClassName = "CliApp"
 }
 
 shadowJar {
@@ -24,6 +24,7 @@ shadowJar {
 
 dependencies {
    // implementation("org.fusesource.jansi:jansi:2.3.2")
-    implementation 'jline:jline:2.14.2'
+    implementation 'org.jline:jline:3.19.0'
+    implementation("org.fusesource.jansi:jansi:2.3.2")
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.9.2'
 }

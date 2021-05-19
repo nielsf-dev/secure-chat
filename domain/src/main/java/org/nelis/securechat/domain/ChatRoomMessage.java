@@ -11,7 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "chatroommessage")
 public class ChatRoomMessage {
     @Id
-    @GeneratedValue(strategy=IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

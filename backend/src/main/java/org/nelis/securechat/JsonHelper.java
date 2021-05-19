@@ -13,7 +13,7 @@ public class JsonHelper {
 
     private static JsonFactory jsonFactory = new JsonFactory();;
 
-    public static String objectNodeToString(ObjectMapper objectMapper, ObjectNode result) throws IOException {
+    public static String objectNodeToString(ObjectNode result, ObjectMapper objectMapper) throws IOException {
         Writer writer = new StringWriter();
         JsonGenerator jsonGenerator = jsonFactory.createGenerator(writer);
 

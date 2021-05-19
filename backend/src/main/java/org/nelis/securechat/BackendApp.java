@@ -19,8 +19,7 @@ public class BackendApp {
 
     public static void main(String[] args) throws LifecycleException {
         logger.info("Starting up data access..");
-        SessionFactoryBuilder sessionFactoryBuilder = new SessionFactoryBuilder();
-        SessionFactory sessionFactory = sessionFactoryBuilder.build();
+        SessionFactory sessionFactory = new SessionFactoryBuilder().build();
         DaoRegistry daoRegistry = new DaoRegistryImp(sessionFactory);
 
         logger.info("Creating ChatServlet..");
@@ -29,6 +28,8 @@ public class BackendApp {
         logger.info("Starting Tomcat..");
         TxFilter filter = createChatFilter(sessionFactory);
         TomcatHelper.startTomcat(chatServlet, filter,8082);
+
+       // startUndertow();
 
         // curl --data-ascii "{\"name\":\"test\"}" http://localhost:8082/createroom
     }

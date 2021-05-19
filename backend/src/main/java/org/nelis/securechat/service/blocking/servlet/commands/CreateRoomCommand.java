@@ -32,6 +32,6 @@ public class CreateRoomCommand implements Command {
         // id returnen
         ObjectNode result = objectMapper.createObjectNode();
         result.put("id", chatRoomID);
-        return JsonHelper.objectNodeToString(objectMapper, result);
+        return JsonHelper.objectNodeToString(result, objectMapper);
     }
 }

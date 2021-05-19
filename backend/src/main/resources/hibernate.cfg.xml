@@ -14,7 +14,7 @@
     <session-factory>
 
         <!-- Database connection settings -->
-        <property name="connection.url">jdbc:postgresql://192.168.63.81/chat</property>
+        <property name="connection.url">jdbc:postgresql://127.0.0.1/chat</property>
         <property name="connection.username">postgres</property>
         <property name="connection.password">toor</property>
 

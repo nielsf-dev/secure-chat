@@ -1,6 +1,9 @@
-package org.nelis.securechat.domain
+package domain
 
 import javassist.NotFoundException
+import org.nelis.securechat.domain.ChatMessage
+import org.nelis.securechat.domain.ChatRoom
+import org.nelis.securechat.domain.User
 import spock.lang.Specification
 
 class ChatRoomTest extends Specification {

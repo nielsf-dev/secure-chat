@@ -9,7 +9,7 @@ import java.io.Writer;
 
 public class JsonHelper {
 
-    private static JsonFactory jsonFactory = new JsonFactory();;
+    private static final JsonFactory jsonFactory = new JsonFactory();;
 
     public static String objectNodeToString(ObjectMapper objectMapper, ObjectNode result) throws IOException {
         Writer writer = new StringWriter();

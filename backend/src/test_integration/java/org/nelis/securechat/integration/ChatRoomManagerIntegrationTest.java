@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ChatRoomManagerIntegrationTest {
 
     private static DaoRegistryImp daoRegistry;
-    private static Session currentSession;
     private static Transaction tx;
 
     @BeforeAll
@@ -27,8 +26,7 @@ public class ChatRoomManagerIntegrationTest {
         SessionFactory sessionFactory = sessionFactoryBuilder.build();
         daoRegistry = new DaoRegistryImp(sessionFactory);
 
-        currentSession = sessionFactory.getCurrentSession();
-
+        Session currentSession = sessionFactory.getCurrentSession();
         tx = currentSession.beginTransaction();
     }
 

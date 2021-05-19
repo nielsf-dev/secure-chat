@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 
 public class ChatServlet implements Servlet {
 
-    private static Logger logger = LoggerFactory.getLogger(ChatServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(ChatServlet.class);
     private ServletConfig config;
 
-    private List<Command> commands;
+    private final List<Command> commands;
 
     public ChatServlet(List<Command> commands) {
         this.commands = commands;
@@ -36,14 +36,15 @@ public class ChatServlet implements Servlet {
     @Override
     public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
         HttpServletRequest httpRequest = (HttpServletRequest)servletRequest;
+        BufferedReader requestReader = httpRequest.getReader();
+        String requestBody = requestReader.lines().collect(Collectors.joining());
+
         logger.info("Chatservlet request URI: {}", httpRequest.getRequestURI());
         Command chatServletCommand = commands.stream()
                 .filter(sc -> sc.getCommandURI().equalsIgnoreCase(httpRequest.getRequestURI()))
                 .findAny()
                 .orElseThrow(() -> new ServletException("Command niet gevonden"));
 
-        BufferedReader requestReader = httpRequest.getReader();
-        String requestBody = requestReader.lines().collect(Collectors.joining());
         String responseBody = chatServletCommand.getResponse(requestBody);
 
         PrintWriter writer = servletResponse.getWriter();

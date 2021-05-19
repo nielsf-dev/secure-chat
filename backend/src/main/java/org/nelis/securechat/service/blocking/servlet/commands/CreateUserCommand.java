@@ -9,8 +9,8 @@ import org.nelis.securechat.service.blocking.ChatRoomManager;
 import java.io.IOException;
 
 public class CreateUserCommand implements Command {
-    private ChatRoomManager chatRoomManager;
-    private ObjectMapper objectMapper;
+    private final ChatRoomManager chatRoomManager;
+    private final ObjectMapper objectMapper;
 
     public CreateUserCommand(ChatRoomManager chatRoomManager, ObjectMapper objectMapper)  {
         this.chatRoomManager = chatRoomManager;
@@ -32,6 +32,6 @@ public class CreateUserCommand implements Command {
         // id returnen
         ObjectNode result = objectMapper.createObjectNode();
         result.put("id", userId);
-        return JsonHelper.objectNodeToString(objectMapper, result);
+        return JsonHelper.objectNodeToString(result, objectMapper);
     }
 }

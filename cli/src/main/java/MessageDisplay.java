@@ -27,15 +27,14 @@ public class MessageDisplay {
         System.out.println(ansi().cursor(0,0).render("Chatroom met zoveel messages " + messages.size()));
 
         // telkens alleen de laatste height messages printen
-        AtomicInteger x = new AtomicInteger(5);
-        List<ChatMessage> last = messages.stream()
+        List<ChatMessage> lastMessages = messages.stream()
                 .collect(lastN(height));
 
-        for (int i = 0; i < messages.size(); i++) {
-            String message = messages.get(i).getMessage();
+        for (int i = 0; i < lastMessages.size(); i++) {
+            ChatMessage chatMessage = lastMessages.get(i);
+            String message = chatMessage.user + ": " + chatMessage.getMessage();
             logger.debug("message = " + message);
-            logger.debug("Integer = " + x.get());
-            Ansi display = ansi().cursor(x.getAndIncrement(), 5).render(message);
+            Ansi display = ansi().cursor(i+5, 5).render(message);
             System.out.println(display);
         }
     }

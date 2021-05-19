@@ -1,9 +1,9 @@
 package org.nelis.securechat.service
 
 
-import org.nelis.securechat.domain.ChatMessage
-import org.nelis.securechat.domain.ChatRoom
-import org.nelis.securechat.domain.User
+import ChatMessage
+import ChatRoom
+import User
 import org.nelis.securechat.service.blocking.ChatRoomManager
 import org.nelis.securechat.service.blocking.dao.ChatRoomDao
 import org.nelis.securechat.service.blocking.dao.UserDao
@@ -14,7 +14,7 @@ class ChatRoomManagerTest extends Specification {
     def chatRoom = new ChatRoom("chatroom");
     def chatRoomDao = Mock(ChatRoomDao)
     def userDao = Mock(UserDao)
-    def chatManager = new ChatRoomManager(chatRoomDao, userDao)
+    def chatRoomManager = new ChatRoomManager(chatRoomDao, userDao)
 
     def "Basic chat"(){
         given:
@@ -23,7 +23,7 @@ class ChatRoomManagerTest extends Specification {
         chatRoomDao.find(1) >> chatRoom
 
         when:
-        def success = chatManager.sendChatMessage(1, 1, new ChatMessage("chatting"))
+        def success = chatRoomManager.sendChatMessage(1, 1, new ChatMessage("chatting"))
 
         then:
         success
@@ -36,13 +36,13 @@ class ChatRoomManagerTest extends Specification {
         userDao.findByName("hans") >> null
 
         when:
-        def user = chatManager.createUser("niels")
+        def user = chatRoomManager.createUser("niels")
 
         then:
         0 * userDao.save(_)
 
         when:
-        chatManager.createUser("hans")
+        chatRoomManager.createUser("hans")
 
         then:
         1 * userDao.save(_)
@@ -54,13 +54,13 @@ class ChatRoomManagerTest extends Specification {
         chatRoomDao.findByName("otherroom") >> null
 
         when:
-        chatManager.createChatRoom("myroom")
+        chatRoomManager.createChatRoom("myroom")
 
         then:
         0 * chatRoomDao.save(_)
 
         when:
-        chatManager.createChatRoom("otherroom")
+        chatRoomManager.createChatRoom("otherroom")
 
         then:
         1 * chatRoomDao.save(_)

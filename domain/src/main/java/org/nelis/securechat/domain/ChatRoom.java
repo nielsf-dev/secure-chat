@@ -20,7 +20,7 @@ public class ChatRoom {
     private static Logger logger = LoggerFactory.getLogger(ChatRoom.class);
 
     @Id
-    @GeneratedValue(strategy=IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
     private String name;
@@ -33,6 +33,7 @@ public class ChatRoom {
     private List<User> users;
 
     @OneToMany(targetEntity = ChatRoomMessage.class, mappedBy = "chatRoom", cascade = CascadeType.ALL)
+    @OrderBy("id")
     private List<ChatRoomMessage> messages;
 
     public ChatRoom(String name) {
@@ -81,11 +82,11 @@ public class ChatRoom {
         return name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public User[] getUsers() {
+        return users.toArray(User[]::new);
     }
 
-    public List<ChatRoomMessage> getMessages() {
-        return messages;
+    public ChatRoomMessage[] getMessages() {
+        return messages.toArray(ChatRoomMessage[]::new);
     }
 }

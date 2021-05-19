@@ -21,7 +21,7 @@ open class ChatRoomManager(private val chatRoomDao: ChatRoomDao,
     fun createChatRoom(name: String):Long{
         var chatRoom = chatRoomDao.findByName(name)
         if(chatRoom == null) {
-            chatRoom = ChatRoom(name)
+            chatRoom = org.nelis.securechat.domain.ChatRoom(name)
             chatRoomDao.save(chatRoom)
         }
         return chatRoom.id
@@ -31,9 +31,9 @@ open class ChatRoomManager(private val chatRoomDao: ChatRoomDao,
      * Maak een user aan als die nog niet bestaat
      */
     fun createUser(name: String):Long{
-        var user:User? = userDao.findByName(name)
+        var user = userDao.findByName(name)
         if(user == null) {
-            user = User(name)
+            user = org.nelis.securechat.domain.User(name)
             userDao.save(user)
         }
         return user.id
@@ -51,8 +51,8 @@ open class ChatRoomManager(private val chatRoomDao: ChatRoomDao,
     /**
      * Verstuur een bericht in een room
      */
-    fun sendChatMessage(roomId: Long, userId: Long, chatMessage: ChatMessage?): Boolean {
-        return try {
+    fun sendChatMessage(roomId: Long, userId: Long, chatMessage: org.nelis.securechat.domain.ChatMessage?): Boolean {
+         return try {
             val chatRoom = chatRoomDao.find(roomId)
             chatRoom.sendMessage(userId, chatMessage)
             true
