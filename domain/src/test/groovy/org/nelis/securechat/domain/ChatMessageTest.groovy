@@ -1,4 +1,4 @@
-package domain
+package org.nelis.securechat.domain
 
 import org.nelis.securechat.domain.ChatMessage
 import spock.lang.Specification

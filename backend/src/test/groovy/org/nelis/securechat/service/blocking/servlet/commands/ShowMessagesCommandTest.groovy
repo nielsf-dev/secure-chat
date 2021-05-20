@@ -2,9 +2,9 @@ package org.nelis.securechat.service.blocking.servlet.commands
 
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import ChatMessage
-import ChatRoom
-import User
+import org.nelis.securechat.domain.ChatMessage
+import org.nelis.securechat.domain.ChatRoom
+import org.nelis.securechat.domain.User
 import org.nelis.securechat.service.blocking.dao.ChatRoomDao
 import spock.lang.Specification
 

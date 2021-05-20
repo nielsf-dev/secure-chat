@@ -1,4 +1,4 @@
-package domain
+package org.nelis.securechat.domain
 
 import javassist.NotFoundException
 import org.nelis.securechat.domain.ChatMessage
