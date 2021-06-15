@@ -9,7 +9,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  * Een chat user
  */
 @Entity()
-@Table(name = "public.\"user\"")
+@Table(name = "\"user\"")
 public class User {
 
     @Id

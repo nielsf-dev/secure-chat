@@ -23,14 +23,8 @@ public class ChatRoom {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
-    /**
-     * Naam van de chat room.
-     */
     private String name;
 
-    /**
-     * De gebruikers.
-     */
     @JoinTable(
             name = "chatroom_user",
             joinColumns = @JoinColumn(name="chatroomid"),
@@ -38,9 +32,6 @@ public class ChatRoom {
     @OneToMany(targetEntity = User.class)
     private List<User> users;
 
-    /**
-     * De berichten.
-     */
     @OneToMany(targetEntity = ChatRoomMessage.class, mappedBy = "chatRoom", cascade = CascadeType.ALL)
     @OrderBy("id")
     private List<ChatRoomMessage> messages;
@@ -87,14 +78,23 @@ public class ChatRoom {
         return id;
     }
 
+    /**
+     * Naam van de chat room.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * De gebruikers.
+     */
     public User[] getUsers() {
         return users.toArray(User[]::new);
     }
 
+    /**
+     * De berichten.
+     */
     public ChatRoomMessage[] getMessages() {
         return messages.toArray(ChatRoomMessage[]::new);
     }

@@ -30,6 +30,7 @@ public class BackendApp {
         Transaction tx = session.beginTransaction();
 
         long id = 2;
+        ChatRoom load = session.load(ChatRoom.class, id);
         ChatRoom chatRoom = session.find(ChatRoom.class, id);
         User user = session.find(User.class, id);
 
