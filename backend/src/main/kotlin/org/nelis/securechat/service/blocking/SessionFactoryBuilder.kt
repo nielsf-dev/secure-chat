@@ -5,10 +5,6 @@ import org.hibernate.boot.MetadataSources
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
 import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder
-import org.nelis.securechat.domain.ChatMessage
-import org.nelis.securechat.domain.ChatRoom
-import org.nelis.securechat.domain.ChatRoomMessage
-import org.nelis.securechat.domain.User
 
 class SessionFactoryBuilder {
 

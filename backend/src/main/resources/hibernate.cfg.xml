@@ -14,9 +14,14 @@
     <session-factory>
 
         <!-- Database connection settings -->
-        <property name="connection.url">jdbc:postgresql://127.0.0.1/chat</property>
+        <property name="connection.url">jdbc:postgresql://127.0.0.1/chat1</property>
         <property name="connection.username">postgres</property>
         <property name="connection.password">toor</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="javax.persistence.schema-generation.scripts.action">create</property>
+        <property name="javax.persistence.schema-generation.scripts.create-target">file:///c:/work/secure-chat/backend/biggapunani.sql</property>
+        <property name="hibernate.hbm2ddl.import_files_sql_extractor">org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor</property>
+        <property name="hibernate.hbm2ddl.delimiter">;</property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">100</property>

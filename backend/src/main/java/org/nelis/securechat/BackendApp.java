@@ -4,7 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.undertow.Undertow;
 import io.undertow.util.Headers;
 import org.apache.catalina.LifecycleException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.nelis.securechat.domain.ChatRoom;
+import org.nelis.securechat.domain.User;
 import org.nelis.securechat.service.blocking.*;
 import org.nelis.securechat.service.blocking.servlet.*;
 import org.nelis.securechat.service.blocking.servlet.commands.*;
@@ -21,6 +25,14 @@ public class BackendApp {
         logger.info("Starting up data access..");
         SessionFactory sessionFactory = new SessionFactoryBuilder().build();
         DaoRegistry daoRegistry = new DaoRegistryImp(sessionFactory);
+
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = session.beginTransaction();
+
+        long id = 2;
+        ChatRoom chatRoom = session.find(ChatRoom.class, id);
+        User user = session.find(User.class, id);
+
 
         logger.info("Creating ChatServlet..");
         ChatServlet chatServlet = createChatServlet(daoRegistry);

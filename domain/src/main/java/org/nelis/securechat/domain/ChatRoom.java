@@ -17,14 +17,20 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "chatroom")
 public class ChatRoom {
 
-    private static Logger logger = LoggerFactory.getLogger(ChatRoom.class);
+    private static final Logger logger = LoggerFactory.getLogger(ChatRoom.class);
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
+    /**
+     * Naam van de chat room.
+     */
     private String name;
 
+    /**
+     * De gebruikers.
+     */
     @JoinTable(
             name = "chatroom_user",
             joinColumns = @JoinColumn(name="chatroomid"),
@@ -32,6 +38,9 @@ public class ChatRoom {
     @OneToMany(targetEntity = User.class)
     private List<User> users;
 
+    /**
+     * De berichten.
+     */
     @OneToMany(targetEntity = ChatRoomMessage.class, mappedBy = "chatRoom", cascade = CascadeType.ALL)
     @OrderBy("id")
     private List<ChatRoomMessage> messages;

@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class CreateRoomCommand implements Command {
 
-    private ChatRoomManager chatRoomManager;
-    private ObjectMapper objectMapper;
+    private final ChatRoomManager chatRoomManager;
+    private final ObjectMapper objectMapper;
 
     public CreateRoomCommand(ChatRoomManager chatRoomManager, ObjectMapper objectMapper)  {
         this.chatRoomManager = chatRoomManager;
