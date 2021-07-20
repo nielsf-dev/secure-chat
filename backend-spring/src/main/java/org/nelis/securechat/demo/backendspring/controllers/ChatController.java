@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequiredArgsConstructor
 public class ChatController {
@@ -26,6 +29,10 @@ public class ChatController {
 
     @PostMapping("/createuser")
     public void createUser(@RequestBody NameDto nameDto){
+
+        Optional<User> byId = userRepository.findById(13L);
+        List<User> all = userRepository.findAll();
+
         User user = new User(nameDto.getName());
         userRepository.save(user);
     }
