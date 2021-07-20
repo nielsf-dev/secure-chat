@@ -8,6 +8,7 @@
  */
 rootProject.name = 'secure-chat'
 include 'backend'
+include 'backend-spring'
 include 'cli'
 include 'domain'
 include 'website'
